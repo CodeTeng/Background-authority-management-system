@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    username: root
+    password: 806823
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/puredesign
+  application:
+    name: pure-design
+server:
+  port: 9000
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+files:
+  upload:
+    path: D:/javaProject2/pure-design/files/
