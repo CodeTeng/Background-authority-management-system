@@ -97,4 +97,4 @@
 ![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/Snipaste_2022-03-16_21-59-03.png)
 ![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/Snipaste_2022-03-16_21-59-19.png)
 ![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/Snipaste_2022-03-16_21-59-34.png)
-![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/S0392Z373FM)HD%7B)MN10NFY.png)
+![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/zhuye.png)
