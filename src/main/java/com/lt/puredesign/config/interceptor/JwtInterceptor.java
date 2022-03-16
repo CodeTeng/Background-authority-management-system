@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.lt.puredesign.common.Constants;
+import com.lt.puredesign.config.AuthAccess;
 import com.lt.puredesign.entity.User;
 import com.lt.puredesign.exception.ServiceException;
 import com.lt.puredesign.service.UserService;
@@ -33,7 +34,15 @@ public class JwtInterceptor implements HandlerInterceptor {
         // 如果不是映射方法直接通过
         if (!(handler instanceof HandlerMethod)) {
             return true;
+        } else {
+            HandlerMethod h = (HandlerMethod) handler;
+            AuthAccess authAccess = h.getMethodAnnotation(AuthAccess.class);
+            // 有注解权限 放行
+            if (authAccess != null) {
+                return true;
+            }
         }
+
         // 执行认证
         if (StringUtils.isBlank(token)) {
             throw new ServiceException(Constants.CODE_401, "无token，请重新登录");
