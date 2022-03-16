@@ -18,10 +18,10 @@ import com.lt.puredesign.entity.User;
 import com.lt.puredesign.entity.dto.UserDTO;
 import com.lt.puredesign.entity.dto.UserPasswordDTO;
 import com.lt.puredesign.exception.ServiceException;
-import com.lt.puredesign.mapper.MenuMapper;
 import com.lt.puredesign.mapper.RoleMapper;
 import com.lt.puredesign.mapper.RoleMenuMapper;
 import com.lt.puredesign.mapper.UserMapper;
+import com.lt.puredesign.service.MenuService;
 import com.lt.puredesign.service.UserService;
 import com.lt.puredesign.util.TokenUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -61,7 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private RoleMenuMapper roleMenuMapper;
 
     @Autowired
-    private MenuMapper menuMapper;
+    private MenuService menuService;
 
     @Override
     public Page<User> findPage(Page<User> page, String username, String email, String address) {
@@ -148,14 +148,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     private List<Menu> getRoleMenus(String roleFlag) {
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("role", roleFlag).last("limit 1");
+        queryWrapper.eq("flag", roleFlag).last("limit 1");
         Role role = roleMapper.selectOne(queryWrapper);
         // 当前用户角色的id
         Integer roleId = role.getId();
         // 获取该角色的所有权限菜单的id集合
         List<Integer> menuIds = roleMenuMapper.selectByRoleId(roleId);
         // 查出系统所有的菜单(树形)
-        List<Menu> menus = menuMapper.findMenus("");
+        List<Menu> menus = menuService.findMenus("");
         // new一个最后筛选完成之后的list
         List<Menu> roleMenus = new ArrayList<>();
         // 筛选当前用户角色的菜单

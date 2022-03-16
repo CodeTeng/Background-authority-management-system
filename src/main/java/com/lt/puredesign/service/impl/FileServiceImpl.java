@@ -12,6 +12,7 @@ import com.lt.puredesign.common.Result;
 import com.lt.puredesign.entity.Files;
 import com.lt.puredesign.mapper.FileMapper;
 import com.lt.puredesign.service.FileService;
+import com.lt.puredesign.util.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,6 +60,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
         // 逻辑删除
         files.setIsDelete(true);
         fileMapper.updateById(files);
+        RedisUtils.flushRedis(Constants.FILES_KEY);
         return Result.success();
     }
 
@@ -115,6 +117,8 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
             saveFile.setMd5(md5);
             fileMapper.insert(saveFile);
         }
+        // 清空缓存
+        RedisUtils.flushRedis(Constants.FILES_KEY);
         // 4.返回url
         return url;
     }
