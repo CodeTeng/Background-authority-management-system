@@ -91,4 +91,10 @@
   4. 没有的话设置角色与菜单权限并存入数据库
 
 ### 项目截图
-![image](https://github.com/CodeTeng/)
+![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/Snipaste_2022-03-16_21-58-54.png)
+![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/Snipaste_2022-03-16_21-59-13.png)
+![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/Snipaste_2022-03-16_21-59-26.png)
+![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/Snipaste_2022-03-16_21-59-03.png)
+![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/Snipaste_2022-03-16_21-59-19.png)
+![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/Snipaste_2022-03-16_21-59-34.png)
+![image](https://github.com/CodeTeng/Background-authority-management-system/blob/master/images/S0392Z373FM)HD%7B)MN10NFY.png)
