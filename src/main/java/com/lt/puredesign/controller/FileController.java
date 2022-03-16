@@ -1,9 +1,11 @@
 package com.lt.puredesign.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lt.puredesign.common.Constants;
 import com.lt.puredesign.common.Result;
 import com.lt.puredesign.entity.Files;
 import com.lt.puredesign.service.FileService;
+import com.lt.puredesign.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,8 +46,11 @@ public class FileController {
      * @return 封装结果集
      */
     @PostMapping("/update")
+//    @CachePut(value = "files", key = "'frontAll'")
     public Result update(@RequestBody Files files) {
-        return Result.success(fileService.updateById(files));
+        fileService.updateById(files);
+        RedisUtils.flushRedis(Constants.FILES_KEY);
+        return Result.success();
     }
 
     /**

@@ -74,7 +74,7 @@ public class UserController {
      * @param user 参数
      * @return 是否成功
      */
-    @PostMapping("/save")
+    @PostMapping
     public Result save(@RequestBody User user) {
         return Result.success(userService.saveOrUpdate(user));
     }

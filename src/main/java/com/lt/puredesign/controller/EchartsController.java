@@ -3,9 +3,17 @@ package com.lt.puredesign.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.Quarter;
+import cn.hutool.core.lang.TypeReference;
+import cn.hutool.json.JSONUtil;
+import com.lt.puredesign.common.Constants;
 import com.lt.puredesign.common.Result;
+import com.lt.puredesign.config.AuthAccess;
+import com.lt.puredesign.entity.Files;
 import com.lt.puredesign.entity.User;
+import com.lt.puredesign.service.FileService;
 import com.lt.puredesign.service.UserService;
+import com.lt.puredesign.util.RedisUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +35,14 @@ public class EchartsController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FileService fileService;
+
+    @GetMapping("/total")
+    public Result total() {
+        return Result.success(userService.count());
+    }
 
     @GetMapping("/example")
     public Result get() {
@@ -70,5 +86,25 @@ public class EchartsController {
             }
         }
         return Result.success(CollUtil.newArrayList(q1, q2, q3, q4));
+    }
+
+    @GetMapping("/file/front/all")
+    @AuthAccess
+//    @Cacheable(value = "files", key = "'frontAll'")
+    public Result frontAll() {
+        // 1. 从缓存获取数据
+        String jsonStr = RedisUtils.get(Constants.FILES_KEY);
+        List<Files> files;
+        if (StringUtils.isBlank(jsonStr)) {
+            // 2.如果取出的json为空，则从数据库中获取
+            files = fileService.list();
+            // 3.再存到缓存中
+            RedisUtils.setCache(Constants.FILES_KEY, JSONUtil.toJsonStr(files));
+        } else {
+            // 减轻数据库的压力
+            // 4.如果有, 从redis缓存中获取数据
+            files = JSONUtil.toBean(jsonStr, new TypeReference<List<Files>>() {}, true);
+        }
+        return Result.success(files);
     }
 }
